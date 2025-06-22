@@ -7,10 +7,16 @@
       "src": "^/404.html|/500.html$",
       "status": 404,
       "dest": "/documentation.html"
+    },
+    {
+      "src": "/.*",
+      "status": 404,
+      "dest": "/404.html"
+    },
+    {
+      "src": "/.*",
+      "status": 500,
+      "dest": "/500.html"
     }
-  ],
-  "errorPages": {
-    "404": "/404.html",
-    "500": "/500.html"
-  }
+  ]
 }
