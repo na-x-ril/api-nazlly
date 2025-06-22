@@ -1,5 +1,16 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/404.html" }
-  ]
+    { "source": "/", "destination": "/documentation.html" }
+  ],
+  "routes": [
+    { 
+      "src": "^/404.html|/500.html$",
+      "status": 404,
+      "dest": "/documentation.html"
+    }
+  ],
+  "errorPages": {
+    "404": "/404.html",
+    "500": "/500.html"
+  }
 }
