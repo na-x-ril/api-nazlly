@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: '#1a1b1e'
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-dark text-white font-sans min-h-screen p-6">
+  <div class="w-full max-w-4xl mx-auto space-y-8">
+    <div class="text-center">
+      <h1 class="text-5xl font-bold mb-4">API Documentation</h1>
+      <p class="text-xl text-gray-400">TikTok API Endpoints Reference</p>
+    </div>
+
+    <div class="bg-white/5 border border-white/10 rounded-xl p-8 space-y-6">
+      <!-- Video Related Endpoints -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-medium text-blue-400">Video Endpoints</h3>
+        <div class="grid gap-4">
+          <div class="space-y-2">
+            <p class="text-white">Get Video Info:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/v-get?url={videoUrl}</code>
+            <p class="text-sm text-gray-300">Required: url</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Download Video:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/v-download?url={videoUrl}&quality={hd}</code>
+            <p class="text-sm text-gray-300">Required: url | Optional: quality (hd)</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Search Videos:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/v-search?keywords={searchQuery}&unique_id={username}&days={number}&cursor={number}&count={number}</code>
+            <p class="text-sm text-gray-300">Required: keywords | Optional: unique_id, days, cursor (default: 0), count (default: 30)</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Get Video Comments:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/v-comments?url={videoUrl}&text={text}&days={number}&unique_id={username}&fuzzy={true}</code>
+            <p class="text-sm text-gray-300">Required: url | Optional: text, days, unique_id, fuzzy</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Get Trending Videos:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/v-trending?region={region}&days={number}</code>
+            <p class="text-sm text-gray-300">Required: region | Optional: days</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audio Related Endpoints -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-medium text-purple-400">Audio Endpoints</h3>
+        <div class="grid gap-4">
+          <div class="space-y-2">
+            <p class="text-white">Get Audio Details:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/audio-detail?url={videoUrl}</code>
+            <p class="text-sm text-gray-300">Required: url</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Download Audio:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/audio-download?url={videoUrl}</code>
+            <p class="text-sm text-gray-300">Required: url</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Related Endpoints -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-medium text-yellow-400">User Endpoints</h3>
+        <div class="grid gap-4">
+          <div class="space-y-2">
+            <p class="text-white">Get User Info:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/user-get?username={username}</code>
+            <p class="text-sm text-gray-300">Required: username</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Get User Posts:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/user-posts?username={username}&days={number}</code>
+            <p class="text-sm text-gray-300">Required: username | Optional: days</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Get User Favorites:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/user-favorites?username={username}</code>
+            <p class="text-sm text-gray-300">Required: username</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-white">Get User Following:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/user-following?username={username}</code>
+            <p class="text-sm text-gray-300">Required: username</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
