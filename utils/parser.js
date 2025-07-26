@@ -87,6 +87,8 @@ export async function fetchYouTubeData(videoId) {
         'Sec-Fetch-Site': 'none',
         'Sec-Fetch-User': '?1',
         'Connection': 'keep-alive',
+        'X-YouTube-Client-Name': '1',
+        'X-YouTube-Client-Version': '2.20210721.00.00',
       }
     });
 
