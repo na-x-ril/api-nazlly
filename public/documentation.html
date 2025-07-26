@@ -27,14 +27,14 @@
   <div class="w-full max-w-4xl mx-auto space-y-8">
     <div class="text-center">
       <h1 class="text-5xl font-bold mb-4">API Documentation</h1>
-      <p class="text-xl text-gray-400">TikTok API Endpoints Reference</p>
+      <p class="text-xl text-gray-400">API Endpoints Reference</p>
     </div>
 
     <div class="bg-white/5 border border-white/10 rounded-xl p-8 space-y-6">
-      <!-- Video Related Endpoints -->
+      <!-- TikTok Endpoints -->
       <div class="space-y-4">
-        <h3 class="text-xl font-medium text-blue-400">Video Endpoints</h3>
-        <div class="grid gap-4">
+        <h3 class="text-xl font-medium text-blue-400">TikTok Video Endpoints</h3>
+        <div class="grid gap-4 pl-4 md:pl-8">
           <div class="space-y-2">
             <p class="text-white">Get Video Info:</p>
             <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/v-get?url={videoUrl}</code>
@@ -61,12 +61,9 @@
             <p class="text-sm text-gray-300">Required: region | Optional: days</p>
           </div>
         </div>
-      </div>
 
-      <!-- Audio Related Endpoints -->
-      <div class="space-y-4">
-        <h3 class="text-xl font-medium text-purple-400">Audio Endpoints</h3>
-        <div class="grid gap-4">
+        <h3 class="text-xl font-medium text-purple-400 mt-8">TikTok Audio Endpoints</h3>
+        <div class="grid gap-4 pl-4 md:pl-8">
           <div class="space-y-2">
             <p class="text-white">Get Audio Details:</p>
             <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/audio-detail?url={videoUrl}</code>
@@ -78,12 +75,9 @@
             <p class="text-sm text-gray-300">Required: url</p>
           </div>
         </div>
-      </div>
 
-      <!-- User Related Endpoints -->
-      <div class="space-y-4">
-        <h3 class="text-xl font-medium text-yellow-400">User Endpoints</h3>
-        <div class="grid gap-4">
+        <h3 class="text-xl font-medium text-yellow-400 mt-8">TikTok User Endpoints</h3>
+        <div class="grid gap-4 pl-4 md:pl-8">
           <div class="space-y-2">
             <p class="text-white">Get User Info:</p>
             <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/tt/user-get?username={username}</code>
@@ -106,7 +100,20 @@
           </div>
         </div>
       </div>
+
+      <!-- YouTube Endpoints -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-medium text-red-400">YouTube Video Endpoints</h3>
+        <div class="grid gap-4 pl-4 md:pl-8">
+          <div class="space-y-2">
+            <p class="text-white">Get YouTube Video Info:</p>
+            <code class="block bg-black/50 p-3 rounded-lg text-green-400">/api/yt/v-get?videoId={videoId}</code>
+            <p class="text-sm text-gray-300">Required: videoId</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </body>
-</html> 
+</html>
