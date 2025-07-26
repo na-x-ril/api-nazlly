@@ -3,16 +3,16 @@ import { fetchYouTubeData } from '../../utils/parser.js';
 import { getSponsorSegments } from '../../utils/sponsorblock.js';
 
 export default async function handler(req, res) {
-  const { videoUrl } = req.query;
+  const { videoId } = req.query;
 
-  if (!videoUrl) return res.status(400).json({ error: 'Missing videoUrl' });
+  if (!videoId) return res.status(400).json({ error: 'Missing videoId' });
 
   try {
-    const data = await fetchYouTubeData(videoUrl);
-    const sponsorSegments = await getSponsorSegments(videoUrl);
+    const data = await fetchYouTubeData(videoId);
+    const sponsorSegments = await getSponsorSegments(videoId);
 
     sendJson( res, 200, {
-      videoUrl,
+      videoId,
       ...data,
       sponsorSegments
     })
