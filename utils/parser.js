@@ -9,6 +9,7 @@ const filterConfig = {
     'videoSecondaryInfoRenderer.owner', // Whitelist: Sertakan owner di setiap videoSecondaryInfoRenderer
     '!videoSecondaryInfoRenderer.owner.videoOwnerRenderer.membershipButton', // Blacklist: Abaikan badges di setiap videoSecondaryInfoRenderer
     '!trackingParams', // Blacklist: Abaikan trackingParams di semua level'
+    '!clickTrackingParams', // Blacklist: Abaikan clickTrackingParams di semua level
     '!miniplayer', // Blacklist: Abaikan miniplayer di semua level
     '!contextParams', // Blacklist: Abaikan contextParams di semua level
     '!dislikeButtonViewModel', // Blacklist: Abaikan dislikeButtonViewModel di semua level
@@ -24,6 +25,7 @@ const filterConfig = {
     '!miniplayer', // Blacklist: Abaikan miniplayer di semua level
     '!contextParams', // Blacklist: Abaikan contextParams di semua level
     '!trackingParams', // Blacklist: Abaikan trackingParams di semua level
+    '!clickTrackingParams', // Blacklist: Abaikan clickTrackingParams di semua level
     '!videoDetails.keywords', // Blacklist: Abaikan keywords
     '!playabilityStatus.reason', // Blacklist: Abaikan reason
     '!playerMicroformatRenderer.availableCountries', // Blacklist: Abaikan availableCountries
