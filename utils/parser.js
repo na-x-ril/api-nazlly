@@ -80,27 +80,29 @@ function getRelativeDateText(dateString) {
 }
 
 // Fungsi utama untuk mengambil dan memparse data YouTube
+// utils/parser.js
 export async function fetchYouTubeData(videoId, headers = {}) {
-    const url = `https://www.youtube.com/watch?v=${videoId}`;
-    console.log(`Fetching (with cookies) from: ${url}`);
+  const url = `https://www.youtube.com/watch?v=${videoId}`;
+  console.log(`Fetching (with cookies) from: ${url}`);
 
-    // Merge the incoming headers (cookies, UA, etc.) with minimal defaults
-    const finalHeaders = {
-      'User-Agent':
-        headers['user-agent'] ||
-        'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
-      Accept:
-        'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      'Accept-Language': headers['accept-language'] || 'en-US,en;q=0.5',
-      'Accept-Encoding': 'identity',
-      'Sec-GPC': '1',
-      'Upgrade-Insecure-Requests': '1',
-      'Sec-Fetch-Dest': 'document',
-      'Sec-Fetch-Mode': 'navigate',
-      'Sec-Fetch-Site': 'none',
-      ...headers,            // 👈 override with the ones the extension sent
-    };
+  // Merge incoming headers with minimal defaults
+  const finalHeaders = {
+    'User-Agent':
+      headers['user-agent'] ||
+      'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
+    Accept:
+      'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': headers['accept-language'] || 'en-US,en;q=0.5',
+    'Accept-Encoding': 'identity',
+    'Sec-GPC': '1',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    ...headers,
+  };
 
+  try {
     const { statusCode, body } = await request(url, {
       headers: finalHeaders,
     });
@@ -110,15 +112,12 @@ export async function fetchYouTubeData(videoId, headers = {}) {
     }
 
     const html = await body.text();
-    console.log(`Response length: ${text.length} characters`);
+    console.log(`Response length: ${html.length} characters`);
 
-    const ytInitialData = extractJSON(text, 'ytInitialData', filterConfig.ytInitialData);
-    const ytInitialPlayerResponse = extractJSON(text, 'ytInitialPlayerResponse', filterConfig.ytInitialPlayerResponse);
+    const ytInitialData    = extractJSON(html, 'ytInitialData', filterConfig.ytInitialData);
+    const ytInitialPlayerResponse = extractJSON(html, 'ytInitialPlayerResponse', filterConfig.ytInitialPlayerResponse);
 
-    return {
-      ytInitialData,
-      ytInitialPlayerResponse
-    };
+    return { ytInitialData, ytInitialPlayerResponse };
   } catch (error) {
     console.error(`Error in fetchYouTubeData for videoId ${videoId}:`, error);
     throw error;
