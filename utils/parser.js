@@ -85,24 +85,34 @@ export async function fetchYouTubeData(videoId, headers = {}) {
   const url = `https://www.youtube.com/watch?v=${videoId}`;
   console.log(`Fetching (with cookies) from: ${url}`);
 
-  // Merge incoming headers with minimal defaults
+  // Merge incoming headers with defaults to match GET request
   const finalHeaders = {
-    'User-Agent':
-      headers['user-agent'] ||
-      'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
-    Accept:
-      'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'User-Agent': headers['user-agent'] || 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': headers['accept-language'] || 'en-US,en;q=0.5',
-    'Accept-Encoding': 'identity',
+    'Accept-Encoding': headers['accept-encoding'] || 'gzip, deflate, br, zstd',
+    'Referer': headers['referer'] || 'https://www.google.com/',
     'Sec-GPC': '1',
     'Upgrade-Insecure-Requests': '1',
     'Sec-Fetch-Dest': 'document',
     'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'none',
-    ...headers,
+    'Sec-Fetch-Site': headers['sec-fetch-site'] || 'cross-site',
+    'Sec-Fetch-User': headers['sec-fetch-user'] || '?1',
+    'Connection': headers['connection'] || 'keep-alive',
+    'Cookie': headers['cookie'] || document?.cookie || '' // Gunakan cookie dari input atau browser
   };
 
+  // Hindari duplikasi header
+  Object.keys(headers).forEach(key => {
+    const normalizedKey = key.toLowerCase();
+    if (normalizedKey !== key && !['user-agent', 'accept-language', 'accept-encoding', 'referer', 'sec-fetch-site', 'sec-fetch-user', 'connection', 'cookie'].includes(normalizedKey)) {
+      finalHeaders[key] = headers[key];
+    }
+  });
+
+  // Tambahkan logging untuk memeriksa cookie
   console.log(`Final headers:`, finalHeaders);
+  console.log(`Cookie sent:`, finalHeaders['Cookie']);
 
   try {
     const { statusCode, body } = await request(url, {
@@ -116,8 +126,14 @@ export async function fetchYouTubeData(videoId, headers = {}) {
     const html = await body.text();
     console.log(`Response length: ${html.length} characters`);
 
-    const ytInitialData    = extractJSON(html, 'ytInitialData', filterConfig.ytInitialData);
+    const ytInitialData = extractJSON(html, 'ytInitialData', filterConfig.ytInitialData);
     const ytInitialPlayerResponse = extractJSON(html, 'ytInitialPlayerResponse', filterConfig.ytInitialPlayerResponse);
+
+    // Tambahkan logging untuk memeriksa respons
+    console.log(`ytInitialPlayerResponse status:`, ytInitialPlayerResponse?.playabilityStatus?.status || 'N/A');
+    if (ytInitialPlayerResponse?.playabilityStatus?.status === 'LOGIN_REQUIRED') {
+      console.warn(`LOGIN_REQUIRED detected. Ensure valid authentication cookies are included.`);
+    }
 
     return { ytInitialData, ytInitialPlayerResponse };
   } catch (error) {
