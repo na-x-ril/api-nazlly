@@ -3,17 +3,26 @@ import { request } from 'undici';
 // Konfigurasi whitelist dan blacklist hardcoded
 const filterConfig = {
   ytInitialData: [
-    'videoPrimaryInfoRenderer.title', // Whitelist: Sertakan title di setiap videoPrimaryInfoRenderer
+    'videoPrimaryInfoRenderer', // Whitelist: Sertakan title di setiap videoPrimaryInfoRenderer
+    '!videoPrimaryInfoRenderer.videoActions', // Blacklist: Abaikan videoActions di setiap videoPrimaryInfoRenderer
+    '!videoPrimaryInfoRenderer.updatedMetadataEndpoint', // Whitelist: Sertakan viewCount di setiap videoPrimaryInfoRenderer
     'videoSecondaryInfoRenderer.owner', // Whitelist: Sertakan owner di setiap videoSecondaryInfoRenderer
-    '!trackingParams', // Blacklist: Abaikan trackingParams di semua level
+    '!videoSecondaryInfoRenderer.owner.videoOwnerRenderer.membershipButton', // Blacklist: Abaikan badges di setiap videoSecondaryInfoRenderer
+    '!trackingParams', // Blacklist: Abaikan trackingParams di semua level'
+    '!miniplayer', // Blacklist: Abaikan miniplayer di semua level
+    '!contextParams', // Blacklist: Abaikan contextParams di semua level
     '!dislikeButtonViewModel', // Blacklist: Abaikan dislikeButtonViewModel di semua level
     '!segmentedLikeDislikeButtonViewModel.dislikeButtonViewModel', // Blacklist: Abaikan dislikeButtonViewModel di segmentedLikeDislikeButtonViewModel
   ],
   ytInitialPlayerResponse: [
     'videoDetails', // Whitelist: Sertakan videoDetails
     'playabilityStatus', // Whitelist: Sertakan playabilityStatus
+    '!playabilityStatus.miniplayer', // Blacklist: Abaikan miniplayer di playabilityStatus
+    '!playabilityStatus.contextParams', // Blacklist: Abaikan contextParams di playability
     'playerConfig', // Whitelist: Sertakan playerConfig
     'microformat', // Whitelist: Sertakan microformat
+    '!miniplayer', // Blacklist: Abaikan miniplayer di semua level
+    '!contextParams', // Blacklist: Abaikan contextParams di semua level
     '!trackingParams', // Blacklist: Abaikan trackingParams di semua level
     '!videoDetails.keywords', // Blacklist: Abaikan keywords
     '!playabilityStatus.reason', // Blacklist: Abaikan reason
