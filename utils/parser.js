@@ -102,6 +102,8 @@ export async function fetchYouTubeData(videoId, headers = {}) {
     ...headers,
   };
 
+  console.log(`Final headers:`, finalHeaders);
+
   try {
     const { statusCode, body } = await request(url, {
       headers: finalHeaders,
