@@ -17,8 +17,8 @@ export default async function handler(req, res) {
   // 4️⃣  Forward cookies & UA to YouTube
   const apiHeaders = {
     cookie,
-    'user-agent': userAgent,
-    'accept-language': acceptLanguage
+    'User-Agent': userAgent,
+    'Accept-Language': acceptLanguage
   };
 
   try {
