@@ -80,35 +80,36 @@ function getRelativeDateText(dateString) {
 }
 
 // Fungsi utama untuk mengambil dan memparse data YouTube
-export async function fetchYouTubeData(videoId) {
-  const url = `https://www.youtube.com/watch?v=${videoId}`;
-  console.log(`Fetching URL: ${url}`);
-  
-  try {
+export async function fetchYouTubeData(videoId, headers = {}) {
+    const url = `https://www.youtube.com/watch?v=${videoId}`;
+    console.log(`Fetching (with cookies) from: ${url}`);
+
+    // Merge the incoming headers (cookies, UA, etc.) with minimal defaults
+    const finalHeaders = {
+      'User-Agent':
+        headers['user-agent'] ||
+        'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
+      Accept:
+        'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': headers['accept-language'] || 'en-US,en;q=0.5',
+      'Accept-Encoding': 'identity',
+      'Sec-GPC': '1',
+      'Upgrade-Insecure-Requests': '1',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'none',
+      ...headers,            // 👈 override with the ones the extension sent
+    };
+
     const { statusCode, body } = await request(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'identity',
-        'Sec-GPC': '1',
-        'Upgrade-Insecure-Requests': '1',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'Connection': 'keep-alive',
-        'X-YouTube-Client-Name': '1',
-        'X-YouTube-Client-Version': '2.20210721.00.00',
-      }
+      headers: finalHeaders,
     });
 
-    console.log(`HTTP Status: ${statusCode}`);
     if (statusCode !== 200) {
-      throw new Error(`Failed to fetch URL: Status ${statusCode}`);
+      throw new Error(`Fetch failed: ${statusCode}`);
     }
 
-    const text = await body.text();
+    const html = await body.text();
     console.log(`Response length: ${text.length} characters`);
 
     const ytInitialData = extractJSON(text, 'ytInitialData', filterConfig.ytInitialData);
